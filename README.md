@@ -2,7 +2,7 @@
 
 # Stonks Dashboard
 
-[![GitHub stars](https://img.shields.io/github/stars/praffall/stonks-dashboard?style=social)](https://github.com/praffall/stonks-dashboard/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/pierridotite/stonks-dashboard?style=social)](https://github.com/praffall/stonks-dashboard/stargazers)
 [![npm version](https://img.shields.io/npm/v/stonks-dashboard.svg)](https://www.npmjs.com/package/stonks-dashboard)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
