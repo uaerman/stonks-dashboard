@@ -4,6 +4,9 @@
   "description": "A cyberpunk-style real-time financial monitor for the terminal",
   "main": "src/index.js",
   "type": "module",
+  "bin": {
+    "stonks-dashboard": "./src/index.js"
+  },
   "scripts": {
     "start": "node src/index.js",
     "dev": "node src/index.js"

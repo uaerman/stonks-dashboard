@@ -1,54 +1,77 @@
+<div align="center">
+
 # Stonks Dashboard
 
-Minimal real-time market dashboard for your terminal.
+[![GitHub stars](https://img.shields.io/github/stars/praffall/stonks-dashboard?style=social)](https://github.com/praffall/stonks-dashboard/stargazers)
+[![npm version](https://img.shields.io/npm/v/stonks-dashboard.svg)](https://www.npmjs.com/package/stonks-dashboard)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**Features**
+**Minimal real-time market dashboard for your terminal**
+
+![Dashboard](assets/dashboard.png)
+
+</div>
+
+---
+
+## Features
 
 - **Watchlist:** Crypto, stocks, ETFs in one view
 - **Trend chart:** Periods 1D, 7D, 30D, 90D
 - **Details panel:** Key metrics (price, change, highs/lows)
 - **Caching & rate limits:** Smooth updates with fewer API errors
 
-**Requirements**
-
-- Node.js (LTS recommended)
-
-**Install**
+## Quick Start
 
 ```bash
-npm install
+npx stonks-dashboard
 ```
 
-**Run**
+Or install globally:
 
 ```bash
+npm install -g stonks-dashboard
+stonks-dashboard
+```
+
+## Local Development
+
+```bash
+git clone https://github.com/praffall/stonks-dashboard.git
+cd stonks-dashboard
+npm install
 npm start
 ```
 
-**Controls**
+## Controls
 
-- Up/Down: Navigate
-- 1–4: Switch period (1D/7D/30D/90D)
-- q or Ctrl+C: Quit
+- `↑`/`↓`: Navigate watchlist
+- `1`–`4`: Switch period (1D/7D/30D/90D)
+- `q` or `Ctrl+C`: Quit
 
-**Configuration**
+## Configuration
 
-- Edit `config.json` to adjust:
-	- `tickers`: symbols to display
-	- `cryptoIds`: CoinGecko IDs for crypto (e.g., "BTC": "bitcoin")
-	- `updateInterval`: polling interval in ms
+Edit `config.json` to customize:
 
-**Screenshot**
+```json
+{
+  "tickers": ["BTC", "ETH", "AAPL", "TSLA"],
+  "cryptoIds": { "BTC": "bitcoin", "ETH": "ethereum" },
+  "updateInterval": 120000
+}
+```
 
-![Dashboard](assets/dashboard.png)
+## Data Sources
 
-**Data Sources**
+- **Crypto:** CoinGecko API
+- **Stocks/ETFs:** Yahoo Finance API
 
-- Crypto: CoinGecko
-- Stocks/ETFs: Yahoo Finance
+Requests are rate-limited and cached (`cache.json`). Crypto details cache ~30 min; price series cache ~1 min.
 
-Notes: Requests are paced and responses cached (`cache.json`). Crypto details cache ~30 min; price series cache ~1 min.
+## Requirements
 
-**License**
+- Node.js (LTS recommended)
 
-See [LICENSE](LICENSE).
+## License
+
+MIT - See [LICENSE](LICENSE)
