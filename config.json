@@ -1,5 +1,5 @@
 {
-  "tickers": ["AMZN", "THYAO.IS"],
+  "tickers": ["TUPRS.IS", "THYAO.IS", "MGROS.IS", "MEGMT.IS", "GLDTR.IS", "GMSTR.IS", "VYMI", "IXUS"],
   "updateInterval": 120000,
   "cryptoIds": {}
 }

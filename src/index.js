@@ -66,7 +66,7 @@ class StonksDashboard {
       border: { type: 'line', fg: 'cyan' },
       fg: 'white',
       columnSpacing: 1,
-      columnWidth: [12, 12, 10]
+      columnWidth: [15, 12, 10]
     });
 
     // Trend chart - top right
@@ -195,9 +195,8 @@ class StonksDashboard {
 
   getAssetCategory(asset) {
     if (asset.type === 'crypto') return 'crypto';
-    if (['SPY', 'QQQ', 'VOO', 'VTI', 'IWM', 'DIA', 'ARKK', 'XLF', 'XLE', 'GLD', 'SLV'].includes(asset.symbol)) {
-      return 'etf';
-    }
+    if (asset.symbol.includes(".IS") & asset.type === "ETF") return 'tretf'
+    if (asset.type === 'ETF') return 'etf'
     return 'stock';
   }
 
@@ -211,6 +210,7 @@ class StonksDashboard {
     const cryptos = this.assetsData.filter(a => this.getAssetCategory(a) === 'crypto');
     const stocks = this.assetsData.filter(a => this.getAssetCategory(a) === 'stock');
     const etfs = this.assetsData.filter(a => this.getAssetCategory(a) === 'etf');
+    const tretfs = this.assetsData.filter(a => this.getAssetCategory(a) === 'tretf');
     
     const addSection = (title, assets) => {
       if (assets.length === 0) return;
@@ -241,6 +241,7 @@ class StonksDashboard {
     
     addSection('-- CRYPTO --', cryptos);
     addSection('-- STOCKS --', stocks);
+    addSection('-- BIST ETFs --', tretfs);
     addSection('-- ETFs --', etfs);
 
     this.watchlistTable.setData({ headers, data: rows });
@@ -352,7 +353,10 @@ class StonksDashboard {
       typeLabel = 'ETF';
       typeIcon = '[E]';
     }
-
+    else if (category === 'tretf') {
+      typeLabel = 'TR-ETF';
+      typeIcon = '[TR-E]';
+    }
     let content = '';
     
     if (asset.type === 'crypto') {
