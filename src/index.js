@@ -12,7 +12,9 @@ class StonksDashboard {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
     const CONFIG_PATH = path.resolve(__dirname, '../config.json');
+    const CURRENCY_PATH = path.resolve(__dirname, '../currency.json');
     this.config = JSON.parse(readFileSync(CONFIG_PATH, 'utf-8'));
+    this.currencySymbols = JSON.parse(readFileSync(CURRENCY_PATH, 'utf-8'));
     this.dataService = new DataService();
     this.assetsData = [];
     this.prevAssetsData = [];
@@ -64,7 +66,7 @@ class StonksDashboard {
       border: { type: 'line', fg: 'cyan' },
       fg: 'white',
       columnSpacing: 1,
-      columnWidth: [8, 12, 10]
+      columnWidth: [12, 12, 10]
     });
 
     // Trend chart - top right
@@ -171,14 +173,17 @@ class StonksDashboard {
     this.refreshDisplay();
   }
 
-  formatPrice(price) {
-    if (!price || isNaN(price)) return '$0.00';
+  formatPrice(price, currency = 'USD') {
+    const symbol = this.currencySymbols[currency] || '$';
+
+    if (!price || isNaN(price)) return `${symbol}0.00`;
+
     if (price >= 1000) {
-      return `$${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      return `${symbol}${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     } else if (price >= 1) {
-      return `$${price.toFixed(2)}`;
+      return `${symbol}${price.toFixed(2)}`;
     } else {
-      return `$${price.toFixed(4)}`;
+      return `${symbol}${price.toFixed(4)}`;
     }
   }
 
@@ -215,14 +220,14 @@ class StonksDashboard {
         const isSelected = this.assetsData.indexOf(asset) === this.selectedIndex;
         const prefix = isSelected ? '>' : ' ';
         const symbol = `${prefix}${asset.symbol}`;
-        const price = this.formatPrice(asset.price);
+        const price = this.formatPrice(asset.price, asset.currency);
         const change = this.formatChange(asset.change);
         
         if (isSelected) {
           rows.push([
-            chalk.bgBlue.white(symbol.padEnd(7)),
-            chalk.bgBlue.white(price.padEnd(11)),
-            asset.change >= 0 ? chalk.bgBlue.green(change) : chalk.bgBlue.red(change)
+            chalk.white(symbol.padEnd(12)),
+            chalk.white(price.padEnd(11)),
+            asset.change >= 0 ? chalk.green(change) : chalk.red(change)
           ]);
         } else {
           rows.push([
@@ -375,15 +380,15 @@ class StonksDashboard {
       content = `
  {bold}{cyan-fg}${typeIcon} ${asset.symbol}{/cyan-fg}{/bold} {gray-fg}${typeLabel}{/gray-fg}
  ${'─'.repeat(38)}
- {bold}Price{/bold}        ${this.formatPrice(asset.price)}
+ {bold}Price{/bold}        ${this.formatPrice(asset.price, asset.currency)}
  {bold}Change{/bold}       {${changeColor}-fg}${changeText}{/${changeColor}-fg}
- {bold}Open{/bold}         ${this.formatPrice(asset.open)}
- {bold}Prev Close{/bold}   ${this.formatPrice(asset.previousClose)}
+ {bold}Open{/bold}         ${this.formatPrice(asset.open, asset.currency)}
+ {bold}Prev Close{/bold}   ${this.formatPrice(asset.previousClose, asset.currency)}
  ${'─'.repeat(38)}
- {bold}High{/bold}         ${this.formatPrice(asset.high)}
- {bold}Low{/bold}          ${this.formatPrice(asset.low)}
- {bold}52wk High{/bold}    ${this.formatPrice(asset.high52w)}
- {bold}52wk Low{/bold}     ${this.formatPrice(asset.low52w)}
+ {bold}High{/bold}         ${this.formatPrice(asset.high, asset.currency)}
+ {bold}Low{/bold}          ${this.formatPrice(asset.low, asset.currency)}
+ {bold}52wk High{/bold}    ${this.formatPrice(asset.high52w, asset.currency)}
+ {bold}52wk Low{/bold}     ${this.formatPrice(asset.low52w, asset.currency)}
  ${'─'.repeat(38)}
  {bold}Volume{/bold}       ${this.formatNumber(asset.volume)}
  {bold}Avg Vol{/bold}      ${this.formatNumber(asset.avgVolume)}
