@@ -195,7 +195,7 @@ class StonksDashboard {
 
   getAssetCategory(asset) {
     if (asset.type === 'crypto') return 'crypto';
-    if (asset.symbol.includes(".IS") & asset.type === "ETF") return 'tretf'
+    if (asset.symbol.includes(".IS") && asset.type === "ETF") return 'tretf'
     if (asset.type === 'ETF') return 'etf'
     return 'stock';
   }
