@@ -1,5 +1,8 @@
 <div align="center">
 
+⚠️ **Warning:** This repository is a fork of the original [pierridotite/stonks-dashboard](https://github.com/pierridotite/stonks-dashboard). 
+
+---
 <h1> Stonks Dashboard </h1>
 
 [![GitHub stars](https://img.shields.io/github/stars/pierridotite/stonks-dashboard?style=social)](https://github.com/praffall/stonks-dashboard/stargazers)
